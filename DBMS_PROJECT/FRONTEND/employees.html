@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Details</title>
+    <link rel="stylesheet" href="styles7.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Employee Details</h1>
+        <div id="employeeForm">
+            <form id="loginForm">
+                <div>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        
+        <div id="employeeDetails" class="employee-details" style="display: none;">
+            <h3>Employee Information:</h3>
+            <div>
+                <strong>Name:</strong> <span id="empName"></span>
+            </div>
+            <div>
+                <strong>Email:</strong> <span id="empEmail"></span>
+            </div>
+            <div>
+                <strong>Position:</strong> <span id="empPosition"></span>
+            </div>
+            <div>
+                <strong>Department:</strong> <span id="empDepartment"></span>
+            </div>
+            <div>
+                <h3>Tasks:</h3>
+                <ul id="taskList">
+                    <!-- Tasks will be displayed here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            // Get the input values
+            var name = document.getElementById("name").value;
+            var password = document.getElementById("password").value;
+            
+            // Here, you could perform AJAX request to validate name/password with server-side logic
+            
+            // For demonstration, let's assume a simple array of employee data
+            var employees = [
+                { name: "tanishq",password:"tanishq", email: "a@example.com", position: "Software Developer", department: "Engineering" },
+                { name: "adnan",password:"adnan", email: "b@example.com", position: "HR Manager", department: "Human Resources" },
+                // Add more employee data as needed
+            ];
+            
+            // Check if there's an employee with the given name and password
+            var employee = employees.find(function(emp) {
+                return emp.name === name && emp.password === password;
+            });
+            
+            if (employee) {
+                // If employee found, display their details
+                document.getElementById("empName").textContent = employee.name;
+                document.getElementById("empEmail").textContent = employee.email;
+                document.getElementById("empPosition").textContent = employee.position;
+                document.getElementById("empDepartment").textContent = employee.department;
+                
+                // Show the employee details section
+                document.getElementById("employeeForm").style.display = "none";
+                document.getElementById("employeeDetails").style.display = "block";
+
+                // Load and display tasks
+                loadTasks();
+            } else {
+                // If employee not found, show an error message (you can customize this)
+                alert("Employee not found. Please check the name and password.");
+            }
+        });
+
+        function loadTasks() {
+            // Simple function to load tasks
+            // In a real application, this would be an AJAX request to a server
+            var taskList = [
+                "Task 1: Example Task",
+                "Task 2: Another Task",
+                "Task 3: More Tasks",
+                // Add more tasks as needed
+            ];
+
+            var taskListElement = document.getElementById("taskList");
+            taskListElement.innerHTML = ""; // Clear previous tasks
+
+            taskList.forEach(function(task) {
+                var li = document.createElement("li");
+                li.textContent = task;
+                taskListElement.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
